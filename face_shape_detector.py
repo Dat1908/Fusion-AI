@@ -10,12 +10,12 @@ from timeit import default_timer
 device = 'cpu'
 classes = ['Heart', 'Oblong', 'Oval', 'Round', 'Square']
 
-def load_model(weight_path='./best_model.pth'):
+def load_model(weight_path="D:\modelvytec\shape_face.pth"):
     weights = torch.load(weight_path)
     model = torchvision.models.efficientnet_b4()
     model.classifier = nn.Linear(model.classifier[1].in_features, len(classes))
     model.load_state_dict(weights)
-    return model
+    return model.cpu()
 
 def pred_and_plot_image(
     model: torch.nn.Module,
@@ -59,7 +59,7 @@ def pred_and_plot_image(
         print('Please upload other image.')
     
 def main():
-    img_path = './images/oblong (10).jpg'
+    img_path = "D:\skincolor.jpg"
     model = load_model()
     print('Load success')
     pred_and_plot_image(model, class_names=classes, image_path=img_path)
